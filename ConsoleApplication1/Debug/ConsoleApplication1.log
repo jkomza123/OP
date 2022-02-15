@@ -1,7 +1,0 @@
-﻿  ConsoleApplication1.cpp
-C:\Users\jkomz\OneDrive\Desktop\STUDIJOS\OP\ConsoleApplication1\ConsoleApplication1.cpp(6,5): error C2065: 'cout': undeclared identifier
-C:\Users\jkomz\OneDrive\Desktop\STUDIJOS\OP\ConsoleApplication1\ConsoleApplication1.cpp(6,13): error C3861: 'setw': identifier not found
-C:\Users\jkomz\OneDrive\Desktop\STUDIJOS\OP\ConsoleApplication1\ConsoleApplication1.cpp(7,5): error C2065: 'cout': undeclared identifier
-C:\Users\jkomz\OneDrive\Desktop\STUDIJOS\OP\ConsoleApplication1\ConsoleApplication1.cpp(7,13): error C3861: 'setw': identifier not found
-C:\Users\jkomz\OneDrive\Desktop\STUDIJOS\OP\ConsoleApplication1\ConsoleApplication1.cpp(8,5): error C2065: 'cout': undeclared identifier
-C:\Users\jkomz\OneDrive\Desktop\STUDIJOS\OP\ConsoleApplication1\ConsoleApplication1.cpp(8,13): error C3861: 'setw': identifier not found
