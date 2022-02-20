@@ -36,7 +36,7 @@ int main()
     delete[] mas;
 }
 void ivestis(data& temp) {
-    int p;
+    int p, d = 0;
     cout << "Iveskite varda: "; cin >> temp.vardas;
     cout << "Iveskite pavarde: "; cin >> temp.pavarde;
     //cout << "Kiek pazymiu turi studentas: "; cin >> n;
@@ -49,7 +49,7 @@ void ivestis(data& temp) {
         if (i == 1)cout << "__________________________________________" << std::endl;
         cout << "Iveskite " << i + 1 << "-a(-i) pazymi: ";
         cin >> p;
-        if (!cin) cout << "veskite is naujo" <<std::endl;
+        //while (!isdigit(p)) cin >> p;
         if (p > 10) {
             temp.paz[i] = rand() % 11;
             temp.n++;
