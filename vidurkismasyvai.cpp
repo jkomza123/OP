@@ -1,5 +1,4 @@
-﻿
-#include <iostream>
+﻿#include <iostream>
 #include <iomanip>
 #include <string>
 
@@ -17,13 +16,14 @@ struct data {
 
 void ivestis(data& temp);
 void isved(data& temp);
-void isdest(data&);
+void isdest(data& temp);
+
 int main()
 {
     data* mas = new data[2];
     for (data* a = mas; a < mas + 2; a++) {
     ivestis(*a);
-}   
+}
     for (data* a = mas; a < mas + 2; a++) {
         isdest(*a);
     }
@@ -36,30 +36,29 @@ int main()
     delete[] mas;
 }
 void ivestis(data& temp) {
-    int p, d = 0;
+    int p;
     cout << "Iveskite varda: "; cin >> temp.vardas;
     cout << "Iveskite pavarde: "; cin >> temp.pavarde;
-    //cout << "Kiek pazymiu turi studentas: "; cin >> n;
     for (int i = 0; i < 100; i++) {
         if (i == 0) cout << "______________________________________________________________________" << std::endl;
         if (i == 0) cout << "Jei norite, kad pazymys butu sugeneruotas automatiskai, rasykite '11'." << std::endl;
         if (i == 0) cout << "______________________________________________________________________" << std::endl;
-        if (i == 1)cout << "__________________________________________" << std::endl;
-        if (i == 1)cout << "Jei tai paskutinis pazymys, rasykite '-1'." << std::endl;
-        if (i == 1)cout << "__________________________________________" << std::endl;
+        //if (i == 0)cout << "___________________________________________" << std::endl;
+        if (i == 0)cout << "Jei norite uzbaigti ivedima, rasykite '-1'." << std::endl;
+        if (i == 0)cout << "___________________________________________" << std::endl;
         cout << "Iveskite " << i + 1 << "-a(-i) pazymi: ";
         cin >> p;
-        //while (!isdigit(p)) cin >> p;
-        if (p > 10) {
-            temp.paz[i] = rand() % 11;
-            temp.n++;
-        }
-        else if (p >= 0&&p<=10) {
-            temp.paz[i] = p;
-            temp.n++;
-        }
-        else i = 1000;
-    }
+            if (p > 10) {
+                temp.paz[i] = rand() % 11;
+                temp.n++;
+            }
+            else if (p >= 0 && p <= 10) {
+                temp.paz[i] = p;
+                temp.n++;
+            }
+            else i = 1000;
+
+}
     cout << "______________________________________________________________________" << std::endl;
     cout << "Jei norite, kad pazymys butu sugeneruotas automatiskai, rasykite '11'." << std::endl;
     cout << "______________________________________________________________________" << std::endl;
@@ -71,8 +70,11 @@ void ivestis(data& temp) {
 void isved(data& temp) {
     cout << std::setw(20) << temp.vardas << std::setw(20) << temp.pavarde;
     for (int i = 0; i < temp.n; i++) temp.rezult += temp.paz[i];
-    temp.rezult = temp.rezult / temp.n * 0.4 + 0.6 * temp.egz;
-    cout << std::setprecision(3) << std::setw(10)  <<temp.rezult<< std::setprecision(3)<< std::setw(25) << temp.med<< std::endl;
+    if (temp.n > 0) {
+        temp.rezult = temp.rezult / temp.n * 0.4 + 0.6 * temp.egz;
+        cout << std::setprecision(3) << std::setw(10) << temp.rezult << std::setprecision(3) << std::setw(25) << temp.med << std::endl;
+    }
+    else cout << std::setprecision(3) << std::setw(10) << temp.egz << std::setprecision(3) << std::setw(25) << temp.egz <<std:: endl;
 }
 void isdest(data& temp) {
     for (int i = 0; i < temp.n; i++) {
