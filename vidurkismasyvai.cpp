@@ -20,16 +20,19 @@ void isdest(data& temp);
 
 int main()
 {
-    data* mas = new data[2];
-    for (data* a = mas; a < mas + 2; a++) {
+    int b;
+    cout << "Kiek studentu norite ivesti?" <<std::endl;
+    cin >> b;
+    data* mas = new data[b];
+    for (data* a = mas; a < mas + b; a++) {
     ivestis(*a);
 }
-    for (data* a = mas; a < mas + 2; a++) {
+    for (data* a = mas; a < mas + b; a++) {
         isdest(*a);
     }
     cout << std::setw(20) << "Vardas" << std::setw(20) << "Pavarde" << std::setw(20) << "Galutinis (Vid.)" << std::setw(20) << "Med (Vid.)"<< std::endl;
     cout << "______________________________________________________________________________" << std::endl;
-    for (data* a = mas; a < mas + 2; a++) {
+    for (data* a = mas; a < mas + b; a++) {
         isved(*a);
     }
 
