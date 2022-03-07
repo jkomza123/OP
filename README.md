@@ -4,7 +4,7 @@
 
 # Programa skirta studentų pažymių vidurkiui ir medianai apskaičiuoti.
 
-### Apie programą?<br>
+### Apie programą.<br>
 https://github.com/jkomza123/OP/blob/v0.1/vidurkismasyvai.cpp yra naudojami C tipo masyvai. Tačiau, rekomenduojama naudoti programos https://github.com/jkomza123/OP/blob/v0.1/vidurkisvectoriai.cpp versiją su vektoriais.
 
 ### Įjungus programą Jums reikės:<br>

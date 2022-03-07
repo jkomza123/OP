@@ -1,8 +1,4 @@
-﻿#include <iostream>
-#include <iomanip>
-#include <string>
-#include <vector>
-#include <stdio.h>
+﻿#include "skaitymas.h"
 
 using std::cout;
 using std::cin;
@@ -22,34 +18,41 @@ void isved(data& temp);
 void isdest(data& temp);
 
 int main()
-{
-    int b;
-    cout << "Kiek studentu norite ivesti?" <<std::endl;
-    cin >> b;
-    data* mas = new data[b];
-    for (data* a = mas; a < mas + b; a++) {
-    ivestis(*a);
-}
-    for (data* a = mas; a < mas + b; a++) {
-        isdest(*a);
-    }
-    cout << std::setw(20) << "Vardas" << std::setw(20) << "Pavarde" << std::setw(20) << "Galutinis (Vid.)" << std::setw(20) << "Med (Vid.)"<< std::endl;
-    cout << "______________________________________________________________________________" << std::endl;
-    for (data* a = mas; a < mas + b; a++) {
-        isved(*a);
-    }
+{   
+    int p,b;
+    cout << "Ar norite ivesti patys, ar duomenis ivesti is failo?" << std::endl;
+    cout << "Spauskite 0 jei norite ivesti patys, 1 jei norite ivesti is failo." << std::endl;
+    cin >> p;
+    if (p == 0) {
+        cout << "Kiek studentu norite ivesti?" << std::endl;
+        cin >> b;
+        data* mas = new data[b];
+        for (data* a = mas; a < mas + b; a++) {
+            ivestis(*a);
+        }
+        for (data* a = mas; a < mas + b; a++) {
+            isdest(*a);
+        }
+        cout << std::setw(20) << "Vardas" << std::setw(20) << "Pavarde" << std::setw(20) << "Galutinis (Vid.)" << std::setw(20) << "Med (Vid.)" << std::endl;
+        cout << "______________________________________________________________________________" << std::endl;
+        for (data* a = mas; a < mas + b; a++) {
+            isved(*a);
+        }
 
-    delete[] mas;
+        delete[] mas;
+    }
+    if (p == 1) {
+        eil_po_eil("studentai.txt", "studentai_copy.txt");
+    }
 }
 void ivestis(data& temp) {
     int p;
     cout << "Iveskite varda: "; cin >> temp.vardas;
     cout << "Iveskite pavarde: "; cin >> temp.pavarde;
-    for (int i = 0; i < 100; i++) {
+    for (int i = 0; i < 1000000; i++) {
         if (i == 0) cout << "______________________________________________________________________" << std::endl;
         if (i == 0) cout << "Jei norite, kad pazymys butu sugeneruotas automatiskai, rasykite '11'." << std::endl;
         if (i == 0) cout << "______________________________________________________________________" << std::endl;
-        //if (i == 0)cout << "___________________________________________" << std::endl;
         if (i == 0)cout << "Jei norite uzbaigti ivedima, rasykite '-1'." << std::endl;
         if (i == 0)cout << "___________________________________________" << std::endl;
         cout << "Iveskite " << i + 1 << "-a(-i) pazymi: ";
@@ -64,7 +67,7 @@ void ivestis(data& temp) {
                 temp.paz[i] = p;
                 temp.n++;
             }
-            else i = 1000;
+            else i = 10000000;
 
 }
     cout << "______________________________________________________________________" << std::endl;
