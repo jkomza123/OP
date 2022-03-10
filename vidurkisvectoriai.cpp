@@ -4,6 +4,7 @@ using std::cout;
 using std::cin;
 using std::string;
 
+
 struct data {
     string vardas, pavarde;
     std::vector <int> paz;
@@ -42,6 +43,7 @@ int main()
         delete[] mas;
     }
     if (p == 1) {
+        pirmaeil("studentai.txt");
         eil_po_eil("studentai.txt", "studentai_copy.txt");
     }
 }
