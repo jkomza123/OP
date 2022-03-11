@@ -17,7 +17,6 @@ void pirmaeil(std::string read_vardas) {
 void skaidymas(std::vector <std::string> splited);
 void eil_po_eil(std::string read_vardas, std::string write_vardas,int &b) {
     std::string eil;
-    //----------------------------------------------------------------------
     std::ifstream open_f(read_vardas);
     std::vector<std::string> splited;
     while (open_f) {
@@ -37,10 +36,10 @@ void eil_po_eil(std::string read_vardas, std::string write_vardas,int &b) {
 
 void skaidymas(std::vector <std::string> splited,int b) {
     std::string eil;
-    for (int i = 1; i < b; i++) {
+    for (int i = 1; i < b-1; i++) {
         eil = splited[i];
         std::vector<std::string> eildalys = split (eil, ' ');
-
+        //cout << i <<std:: endl;
         data mok = data();
         mok.n = paz;
         mok.vardas = eildalys[0];
@@ -77,32 +76,20 @@ std::vector<std::string> split(std::string eil, char delimiter)
 void isvestis(std::vector<data>& mok, int paz)
 {   
     std::ofstream out_f("rezultatas.txt");
-    out_f << "Vardas" <<std:: setw(20) << "Pavarde" <<std:: setw(20) << "Galutinis (Vid.)" <<std:: setw(20) << "Galutinis (Med.)" <<std:: endl;
+    out_f << "Vardas" <<std:: setw(20) << "Pavarde" <<std:: setw(20) << "Galutinis (Vid.)" <<std:: setw(20) << "Galutinis (Med.)" <<'\n';
     out_f << "--------------------------------------------------------------------------" <<std:: endl;
     int i = 0;
-    sortabc(mok);
+    std::sort(mok.begin(), mok.end(), [](const data&d1,const data&d2) {
+        return d1.vardas < d2.vardas;
+        });
     for (data& m : mok)
     {
         rikiavimas(mok, i, paz);
         mok[i].rezult = mok[i].rezult / mok[i].n * 0.4 + 0.6 * mok[i].egz;
-        out_f << mok[i].vardas <<std:: setw(20) << mok[i].pavarde << std::setprecision(3) << std::setw(10) << mok[i].rezult << std::setprecision(3) << std::setw(25) << mok[i].med << std::endl;
+        out_f << mok[i].vardas <<std:: setw(20) << mok[i].pavarde << std::setprecision(3) << std::setw(10) << mok[i].rezult << std::setprecision(3) << std::setw(25) << mok[i].med << '\n';
         i++;
     }
 
-}
-std::vector<data> sortabc(std::vector<data> mok)
-{
-    data laikinas;
-    for (data& m : mok)
-        for (data& n : mok)
-            if (m.vardas > n.vardas)
-            {
-                laikinas = m;
-                m = n;
-                n = m;
-            }
-
-    return mok;
 }
 void rikiavimas(std::vector<data>& mok, int a, int paz)
 {
