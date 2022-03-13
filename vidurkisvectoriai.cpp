@@ -93,8 +93,15 @@ void isdest(data& temp) {
             }
         }
     }
+<<<<<<< Updated upstream
     if (temp.n % 2 == 0) {
         temp.med = (temp.paz[temp.n / 2] + temp.paz[(temp.n / 2) - 1]) * 0.5;
+=======
+    if (p == 1) {
+        failotikrinimas();
+        pirmaeil("studentai.txt");
+        eil_po_eil("studentai.txt", "studentai_copy.txt",b);
+>>>>>>> Stashed changes
     }
     else temp.med = temp.paz[temp.n / 2];
 }
