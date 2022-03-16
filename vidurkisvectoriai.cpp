@@ -27,6 +27,7 @@ int main()
         delete[] mas;
     }
     if (p == 1) {
+        failotikrinimas();
         pirmaeil("studentai.txt");
         eil_po_eil("studentai.txt", "studentai_copy.txt",b);
     }

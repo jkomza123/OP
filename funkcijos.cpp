@@ -3,7 +3,40 @@
 int paz=0;
 std::vector<data> mokiniai;
 
+//VEDAMA IS FAILO
+
+void failotikrinimas() {
+    struct nera : public std::exception {
+        const char* what() const throw () {
+            return " Klaida";
+        }
+    };
+    try
+    {   
+        std::string eil;
+        std::ifstream open_f("studentai.txt");
+        std::getline(open_f, eil);
+       // open_f.exceptions(std::ifstream::eofbit);
+        open_f.open("studentai.txt");
+        if (open_f.is_open()) {
+            cout << "*Failas atidarytas ir programa pradeda duomenu apdorojima*" << std::endl;
+        }
+        else if (!open_f.is_open()) {
+            throw nera();
+        }
+        if (open_f.eof())
+        {
+            cout << "*Failas tuscias*" << std::endl;
+        }
+    }
+    catch (nera& e)
+    {
+        cout << "*Failo nera arba netinkamas failo formatas*" << e.what() << std::endl;
+        _exit(1);
+    }
+}
 void pirmaeil(std::string read_vardas) {
+
     std::string eil;
     std::ifstream open_f(read_vardas);
     std::getline(open_f, eil);
@@ -76,8 +109,8 @@ std::vector<std::string> split(std::string eil, char delimiter)
 void isvestis(std::vector<data>& mok, int paz)
 {   
     std::ofstream out_f("rezultatas.txt");
-    out_f << "Vardas" <<std:: setw(20) << "Pavarde" <<std:: setw(20) << "Galutinis (Vid.)" <<std:: setw(20) << "Galutinis (Med.)" <<'\n';
-    out_f << "--------------------------------------------------------------------------" <<std:: endl;
+    out_f<<std::setw(20) << "Vardas" <<std:: setw(20) << "Pavarde" <<std:: setw(20) << "Galutinis (Vid.)" <<std:: setw(20) << "Galutinis (Med.)" <<'\n';
+    out_f << "----------------------------------------------------------------------------------------" <<std:: endl;
     int i = 0;
     std::sort(mok.begin(), mok.end(), [](const data&d1,const data&d2) {
         return d1.vardas < d2.vardas;
@@ -86,7 +119,7 @@ void isvestis(std::vector<data>& mok, int paz)
     {
         rikiavimas(mok, i, paz);
         mok[i].rezult = mok[i].rezult / mok[i].n * 0.4 + 0.6 * mok[i].egz;
-        out_f << mok[i].vardas <<std:: setw(20) << mok[i].pavarde << std::setprecision(3) << std::setw(10) << mok[i].rezult << std::setprecision(3) << std::setw(25) << mok[i].med << '\n';
+        out_f << std::setw(20) << mok[i].vardas <<std:: setw(20) << mok[i].pavarde << std::setprecision(3) << std::setw(10) << mok[i].rezult << std::setprecision(3) << std::setw(25) << mok[i].med << '\n';
         i++;
     }
 
@@ -110,6 +143,7 @@ void rikiavimas(std::vector<data>& mok, int a, int paz)
         else mok[a].med = mok[a].paz[mok[a].n / 2];
     }
 }
+//VEDAMA RANKA
 void ivestis(data& temp) {
     int p;
     cout << "Iveskite varda: "; cin >> temp.vardas;
