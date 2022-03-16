@@ -19,7 +19,7 @@ void failotikrinimas() {
        // open_f.exceptions(std::ifstream::eofbit);
         open_f.open("studentai.txt");
         if (open_f.is_open()) {
-            cout << "*Failas atidarytas*" << std::endl;
+            cout << "*Failas atidarytas ir programa pradeda duomenu apdorojima*" << std::endl;
         }
         else if (!open_f.is_open()) {
             throw nera();
