@@ -41,3 +41,5 @@ vector <std::string> split(std::string eil, char delimiter);
 vector<data> sortabc(std::vector<data> mok);
 void isvestis(std::vector<data>& mok, int paz);
 void rikiavimas(std::vector<data>& mok, int a, int paz);
+
+void generavimas(int s,int pz);

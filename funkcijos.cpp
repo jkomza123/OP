@@ -3,6 +3,20 @@
 int paz=0;
 std::vector<data> mokiniai;
 
+//GENERAVIMAS
+
+void generavimas(int s, int pz) {
+    std::ofstream out_f("studentai.txt");
+    for (int i = 0; i <= s; i++) {
+        out_f << "Vardas" << i << ' ' << "Pavarde" << i << ' ';
+        for (int j = 0; j < pz; j++) {
+            out_f << rand() % 11 << ' ';
+        }
+        out_f << rand() % 11 << '\n';
+    }
+    out_f.close();
+}
+
 //VEDAMA IS FAILO
 
 void failotikrinimas() {
@@ -61,10 +75,11 @@ void eil_po_eil(std::string read_vardas, std::string write_vardas,int &b) {
         else break;
     }
     open_f.close();
-    std::ofstream out_f(write_vardas);
+    /*std::ofstream out_f(write_vardas);
     for (std::string a : splited) out_f << a;
-    out_f.close();
+    out_f.close();*/
     skaidymas(splited,b);
+    
 }
 
 void skaidymas(std::vector <std::string> splited,int b) {
@@ -108,9 +123,12 @@ std::vector<std::string> split(std::string eil, char delimiter)
 }
 void isvestis(std::vector<data>& mok, int paz)
 {   
-    std::ofstream out_f("rezultatas.txt");
-    out_f<<std::setw(20) << "Vardas" <<std:: setw(20) << "Pavarde" <<std:: setw(20) << "Galutinis (Vid.)" <<std:: setw(20) << "Galutinis (Med.)" <<'\n';
-    out_f << "----------------------------------------------------------------------------------------" <<std:: endl;
+    std::ofstream out_v("vargsiukai.txt");
+    std::ofstream out_m("moksliukai.txt");
+    out_v<<std::setw(20) << "Vardas" <<std:: setw(20) << "Pavarde" <<std:: setw(20) << "Galutinis (Vid.)" <<std:: setw(20) << "Galutinis (Med.)" <<'\n';
+    out_v << "----------------------------------------------------------------------------------------" <<std:: endl;
+    out_m << std::setw(20) << "Vardas" << std::setw(20) << "Pavarde" << std::setw(20) << "Galutinis (Vid.)" << std::setw(20) << "Galutinis (Med.)" << '\n';
+    out_m << "----------------------------------------------------------------------------------------" << std::endl;
     int i = 0;
     std::sort(mok.begin(), mok.end(), [](const data&d1,const data&d2) {
         return d1.vardas < d2.vardas;
@@ -119,10 +137,12 @@ void isvestis(std::vector<data>& mok, int paz)
     {
         rikiavimas(mok, i, paz);
         mok[i].rezult = mok[i].rezult / mok[i].n * 0.4 + 0.6 * mok[i].egz;
-        out_f << std::setw(20) << mok[i].vardas <<std:: setw(20) << mok[i].pavarde << std::setprecision(3) << std::setw(10) << mok[i].rezult << std::setprecision(3) << std::setw(25) << mok[i].med << '\n';
+        if (mok[i].rezult<5) out_v << std::setw(20) << mok[i].vardas << std::setw(20) << mok[i].pavarde << std::setprecision(3) << std::setw(10) << mok[i].rezult << std::setprecision(3) << std::setw(25) << mok[i].med << '\n';
+        else if (mok[i].rezult >= 5) out_m << std::setw(20) << mok[i].vardas << std::setw(20) << mok[i].pavarde << std::setprecision(3) << std::setw(10) << mok[i].rezult << std::setprecision(3) << std::setw(25) << mok[i].med << '\n';
         i++;
     }
-
+    out_v.close();
+    out_m.close();
 }
 void rikiavimas(std::vector<data>& mok, int a, int paz)
 {
