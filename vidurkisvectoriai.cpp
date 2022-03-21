@@ -4,6 +4,7 @@
 
 int main()
 {
+    auto start = std::chrono::high_resolution_clock::now();
     int p, b = 0, a;
     cout << "Ar norite sugeneruoti atsitiktiniu duomenu faila?" << std::endl;
     cout << "Spauskite 0 jei norite naudoti savo duomenis, 1 jei norite, kad butu sugeneruotas atsitiktiniu duomenu failas." << std::endl;
@@ -45,5 +46,8 @@ int main()
             eil_po_eil("studentai.txt", "studentai_copy.txt", b);
         }
     }
+    auto stop = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::seconds>(stop - start);
+    cout << "VISOS PROGRAMOS VEIKIMAS - " << duration.count() <<" s"<< '\n';
 }
 
