@@ -5,7 +5,7 @@
 # Programa skirta studentų pažymių vidurkiui ir medianai apskaičiuoti.
 
 ### Apie programą.<br>
-https://github.com/jkomza123/OP/blob/v0.3/vidurkisvectoriai.cpp naudojami vektoriai
+https://github.com/jkomza123/OP/blob/v0.5/vidurkisdeque.cpp naudojami deque tipo konteineriai
 
 ### Įjungus programą Jums reikės:<br>
 - Pasirinkti ar duomenys įkeliami iš failo ar vedami ranka.
