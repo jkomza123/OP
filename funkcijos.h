@@ -11,7 +11,9 @@
 #include <sstream>
 #include <chrono>
 #include <algorithm>
-#include <cctype>  
+#include <cctype>
+#include <thread>
+#include <deque>
 
 using std::cout;
 using std::cin;
@@ -21,7 +23,7 @@ using std::vector;
 
 struct data {
     string vardas, pavarde;
-    std::vector <int> paz;
+    std::deque <int> paz;
     int egz;
     double rezult = 0;
     double med;
@@ -34,10 +36,12 @@ void isdest(data& temp);
 
 void failotikrinimas();
 void eil_po_eil(std::string, std::string, int &b);
-void skaidymas(std::vector <std::string> splited,int b);
+void skaidymas(std::deque <std::string> splited,int b);
 void pirmaeil(std::string read_vardas);
 void israsymas(int b);
 vector <std::string> split(std::string eil, char delimiter);
-vector<data> sortabc(std::vector<data> mok);
-void isvestis(std::vector<data>& mok, int paz);
-void rikiavimas(std::vector<data>& mok, int a, int paz);
+vector<data> sortabc(std::deque<data> mok);
+void isvestis(std::deque<data>& mok, int paz);
+void rikiavimas(std::deque<data>& mok, int a, int paz);
+
+void generavimas(int s,int pz);
