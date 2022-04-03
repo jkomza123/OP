@@ -1,0 +1,19 @@
+vector
+failo dydis	nuskaitymas	rusiavimas	
+1000	 20	0ms		6ms				
+10000	 20	8ms		35ms				
+100000	 20	88ms		351ms				
+1000000	 5	614ms		3100ms				
+10000000 5	6583ms		38640ms	
+			
+deque
+failo dydis	nuskaitymas	rusiavimas
+1000	 20	0ms		5ms			
+10000	 20	8ms		43ms
+100000	 20	94ms		508ms
+1000000	 5	620ms		3782ms
+10000000 5	6507ms		41300s
+
+list
+
+	
