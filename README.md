@@ -5,7 +5,8 @@
 # Programa skirta studentų pažymių vidurkiui ir medianai apskaičiuoti.
 
 ### Apie programą.<br>
-https://github.com/jkomza123/OP/blob/v0.5/vidurkisdeque.cpp naudojami deque tipo konteineriai
+https://github.com/jkomza123/OP/blob/v1.0/vidurkisdeque.cpp naudojami deque tipo konteineriai.
+https://github.com/jkomza123/OP/blob/v1.0/vidurkisvector.cpp naudojami vector tipo konteineriai.
 
 ### Įjungus programą Jums reikės:<br>
 - Pasirinkti ar duomenys įkeliami iš failo ar vedami ranka.
@@ -21,4 +22,9 @@ Programa papildyta, kad rodytu klaidas, kurios nutinka įvedant duomenis iš fai
 
 ### Pasirinkus šiuos nustatymus matysite sudarytą lentelę su studentu pavardėmis, vardais ir pažymių vidurkiais ir medianomis.
 
-
+v0.1 Pradinė programos versija skaičiuojanti vidurkį pagal medianą ir pažymius.
+v0.2 Sukurta funkcija skaityti duomenis iš failo.
+v0.3 Sukurta funkcija, rodanti klaidas, nutinkančias programos eigoje.
+v0.4 Sukurtas funkcija, generuojanti atsitiktinių duomenų failą.
+v0.5 Sukurta versija su deque tipo konteineriais.
+v1.0 Optimizuota programa, veikianti sparčiau.
