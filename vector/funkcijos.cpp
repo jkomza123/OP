@@ -1,10 +1,11 @@
 ﻿#include "funkcijos.h"
 
 int paz=0;
+int mokslsk = 0;
+int vargsk = 0;
 std::vector<data> mokiniai;
-std::vector<data> moksliukai;
 std::vector<data> vargsiukai;
-
+std::vector<data> moksliukai;
 //GENERAVIMAS
 
 void generavimas(int s, int pz) {
@@ -23,7 +24,8 @@ void generavimas(int s, int pz) {
     my_buffer.clear();
     auto stop = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start);
-    cout <<"FAILO SUKURIMAS IR UZDARYMAS - " << duration.count() <<" ms" << '\n';
+    double t = (duration.count());
+    cout <<"FAILO SUKURIMAS IR UZDARYMAS - " << t/1000 <<" s" << '\n';
 }
 
 //VEDAMA IS FAILO
@@ -90,7 +92,8 @@ void eil_po_eil(std::string read_vardas, std::string write_vardas,int &b) {
     out_f.close();*/
     auto stop = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start);
-    cout << "FAILO NUSKAITYMAS - " << duration.count() <<" ms" << '\n';
+    double t = (duration.count());
+    cout << "FAILO NUSKAITYMAS - " << t/1000<<" s" << '\n';
     skaidymas(splited,b);
     
 }
@@ -119,7 +122,7 @@ void skaidymas(std::vector <std::string> splited,int b) {
         mokiniai.push_back(mok);
     }
     dalijimas(mokiniai, paz, vargsiukai, moksliukai);
-    isvestis(mokiniai, paz, vargsiukai, moksliukai);
+    isvestis(mokiniai, paz,vargsiukai,moksliukai);
 }
 std::vector<std::string> split(std::string eil, char delimiter)
 {
@@ -145,49 +148,58 @@ void dalijimas(std::vector<data>& mok, int paz, std::vector<data>& vargsiukai, s
         mok[i].rezult = mok[i].rezult / mok[i].n * 0.4 + 0.6 * mok[i].egz;
         if (mok[i].rezult < 5) {
             vargsiukai.push_back(mok[i]);
-            mok[i].rezult = -1;
+            vargsk++;
+        }
+        else {
+            mok.push_back(mok[i]);
+            mokslsk++;
         }
         i++;
     }
+    //for (int i = 0; i < mokslsk + vargsk; i++) mok.pop_front();
+    mok.erase(mok.begin(),mok.begin()+mokslsk + vargsk);
     auto stop = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start);
-    cout << "STUDENTU RUSIAVIMAS - " << duration.count() << " ms" << '\n';
+    double t = (duration.count());
+    cout << "STUDENTU RUSIAVIMAS - " << t/1000 << " s" << '\n';
 }
-void isvestis (std::vector<data>&mok, int paz, std::vector<data>&vargsiukai, std::vector<data>&moksliukai)
+void isvestis(std::vector<data>& mok, int paz, std::vector<data>& vargsiukai, std::vector<data>& moksliukai)
 {   
     std::stringstream vargsai;
     std::stringstream mokslai;
     auto start = std::chrono::high_resolution_clock::now();
-    vargsai <<std::setw(20) << "Vardas" <<std:: setw(20) << "Pavarde" <<std:: setw(20) << "Galutinis (Vid.)" <<std:: setw(20) << "Galutinis (Med.)" <<'\n';
+    vargsai << std::setw(20) << "Vardas" <<std:: setw(20) << "Pavarde" <<std:: setw(20) << "Galutinis (Vid.)" <<std:: setw(20) << "Galutinis (Med.)" <<'\n';
     vargsai << "----------------------------------------------------------------------------------------" <<std:: endl;
     mokslai << std::setw(20) << "Vardas" << std::setw(20) << "Pavarde" << std::setw(20) << "Galutinis (Vid.)" << std::setw(20) << "Galutinis (Med.)" << '\n';
     mokslai << "----------------------------------------------------------------------------------------" << std::endl;
     int i = 0;
+    
     for (data& m : vargsiukai)
     {
         rikiavimas(vargsiukai, i, paz);
-        vargsai << std::setw(20) << vargsiukai[i].vardas << std::setw(20) << vargsiukai[i].pavarde << std::setw(10) << std::fixed << std::setprecision(2) << vargsiukai[i].rezult << std::setw(25) << std::fixed << std::setprecision(2) << vargsiukai[i].med << '\n';
+        vargsai << std::setw(20) << vargsiukai[i].vardas << std::setw(20) << vargsiukai[i].pavarde  << std::setw(10) <<std::fixed<< std::setprecision(2) << vargsiukai[i].rezult << std::setw(25) <<std::fixed<< std::setprecision(2) << vargsiukai[i].med << '\n';
         i++;
     }
     i = 0;
     for (data& m : mok)
     {
-        rikiavimas(mok, i, paz);
-        if(mok[i].rezult>=0)mokslai << std::setw(20) << mok[i].vardas << std::setw(20) << mok[i].pavarde << std::setw(10) << std::fixed << std::setprecision(2) << mok[i].rezult << std::setw(25) << std::fixed << std::setprecision(2) << mok[i].med << '\n';
-        i++;
+       rikiavimas(mok, i, paz);
+       mokslai << std::setw(20) << mok[i].vardas << std::setw(20) << mok[i].pavarde << std::setw(10) << std::fixed << std::setprecision(2) << mok[i].rezult << std::setw(25) << std::fixed << std::setprecision(2) << mok[i].med << '\n';
+       i++;
     }
-
     std::ofstream out_v("vargsiukai.txt");
     std::ofstream out_m("moksliukai.txt");
     out_v << vargsai.str();
     out_m << mokslai.str();
     out_v.close();
     out_m.close();
-    vargsai.clear();
-    mokslai.clear();
+    mokiniai.clear();
+    vargsiukai.clear();
+    moksliukai.clear();
     auto stop = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start);
-    cout << "STUDENTU ISVEDIMAS - " << duration.count() <<" ms" << '\n';
+    double t = (duration.count());
+    cout << "STUDENTU ISVEDIMAS - " << t/1000 <<" s" << '\n';
 }
 void rikiavimas(std::vector<data>& mok, int a, int paz)
 {

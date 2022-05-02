@@ -1,11 +1,11 @@
 ﻿#include "funkcijos.h"
 
 int paz=0;
-int mokslsk = 0;
-int vargsk = 0;
-std::deque<data> mokiniai;
-std::deque<data> vargsiukai;
-std::deque<data> moksliukai;
+size_t mokslsk = 0;
+size_t vargsk = 0;
+std::list<data> mokiniai;
+std::list<data> vargsiukai;
+std::list<data> moksliukai;
 //GENERAVIMAS
 
 void generavimas(int s, int pz) {
@@ -72,12 +72,12 @@ void pirmaeil(std::string read_vardas) {
         }
         paz = paz - 2;
 }
-void skaidymas(std::deque <std::string> splited);
+void skaidymas(std::list <std::string> splited);
 void eil_po_eil(std::string read_vardas, std::string write_vardas,int &b) {
     auto start = std::chrono::high_resolution_clock::now();
     std::string eil;
     std::ifstream open_f(read_vardas);
-    std::deque<std::string> splited;
+    std::list<std::string> splited;
     while (open_f) {
         if (!open_f.eof()) {
             std::getline(open_f, eil);
@@ -98,10 +98,11 @@ void eil_po_eil(std::string read_vardas, std::string write_vardas,int &b) {
     
 }
 
-void skaidymas(std::deque <std::string> splited,int b) {
+void skaidymas(std::list <std::string> splited,int b) {
     std::string eil;
+    auto it = splited.begin();
     for (int i = 1; i < b-1; i++) {
-        eil = splited[i];
+        eil = *it;
         std::vector<std::string> eildalys = split (eil, ' ');
         //cout << i <<std:: endl;
         data mok = data();
@@ -120,6 +121,7 @@ void skaidymas(std::deque <std::string> splited,int b) {
             else value >> mok.egz;
         }
         mokiniai.push_back(mok);
+        std::advance(it,1);
     }
     dalijimas(mokiniai, paz, vargsiukai, moksliukai);
     isvestis(mokiniai, paz,vargsiukai,moksliukai);
@@ -138,32 +140,34 @@ std::vector<std::string> split(std::string eil, char delimiter)
 
     return result;
 }
-void dalijimas(std::deque<data>& mok, int paz, std::deque<data>& vargsiukai, std::deque<data>& moksliukai) {
+void dalijimas(std::list<data>& mok, int paz, std::list<data>& vargsiukai, std::list<data>& moksliukai) {
     auto start = std::chrono::high_resolution_clock::now();
     int i = 0;
-    std::sort(mok.begin(), mok.end(), [](const data& d1, const data& d2) {
+    std::sort(mok.begin(), mok.end()) {
         return d1.vardas < d2.vardas;
         });
     for (data& m : mok) {
-        mok[i].rezult = mok[i].rezult / mok[i].n * 0.4 + 0.6 * mok[i].egz;
-        if (mok[i].rezult < 5) {
-            vargsiukai.push_back(mok[i]);
+        m.rezult = m.rezult / m.n * 0.4 + 0.6 * m.egz;
+        if (m.rezult < 5) {
+            vargsiukai.push_back(m);
             vargsk++;
         }
         else {
-            mok.push_back(mok[i]);
+            mok.push_back(m);
             mokslsk++;
         }
         i++;
     }
     //for (int i = 0; i < mokslsk + vargsk; i++) mok.pop_front();
-    mok.erase(mok.begin(),mok.begin()+mokslsk + vargsk);
+    auto mid = mok.begin();
+    std::advance(mid, mokslsk + vargsk);
+    mok.erase(mok.begin(),mid);
     auto stop = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start);
     double t = (duration.count());
     cout << "STUDENTU RUSIAVIMAS - " << t/1000 << " s" << '\n';
 }
-void isvestis(std::deque<data>& mok, int paz, std::deque<data>& vargsiukai, std::deque<data>& moksliukai)
+void isvestis(std::list<data>& mok, int paz, std::list<data>& vargsiukai, std::list<data>& moksliukai)
 {   
     std::stringstream vargsai;
     std::stringstream mokslai;
@@ -177,14 +181,14 @@ void isvestis(std::deque<data>& mok, int paz, std::deque<data>& vargsiukai, std:
     for (data& m : vargsiukai)
     {
         rikiavimas(vargsiukai, i, paz);
-        vargsai << std::setw(20) << vargsiukai[i].vardas << std::setw(20) << vargsiukai[i].pavarde  << std::setw(10) <<std::fixed<< std::setprecision(2) << vargsiukai[i].rezult << std::setw(25) <<std::fixed<< std::setprecision(2) << vargsiukai[i].med << '\n';
+        vargsai << std::setw(20) << m.vardas << std::setw(20) << m.pavarde  << std::setw(10) <<std::fixed<< std::setprecision(2) << m.rezult << std::setw(25) <<std::fixed<< std::setprecision(2) << m.med << '\n';
         i++;
     }
     i = 0;
     for (data& m : mok)
     {
        rikiavimas(mok, i, paz);
-       mokslai << std::setw(20) << mok[i].vardas << std::setw(20) << mok[i].pavarde << std::setw(10) << std::fixed << std::setprecision(2) << mok[i].rezult << std::setw(25) << std::fixed << std::setprecision(2) << mok[i].med << '\n';
+       mokslai << std::setw(20) << m.vardas << std::setw(20) << m.pavarde << std::setw(10) << std::fixed << std::setprecision(2) << m.rezult << std::setw(25) << std::fixed << std::setprecision(2) << m.med << '\n';
        i++;
     }
     std::ofstream out_v("vargsiukai.txt");
@@ -201,25 +205,33 @@ void isvestis(std::deque<data>& mok, int paz, std::deque<data>& vargsiukai, std:
     double t = (duration.count());
     cout << "STUDENTU ISVEDIMAS - " << t/1000 <<" s" << '\n';
 }
-void rikiavimas(std::deque<data>& mok, int a, int paz)
-{
+void rikiavimas(std::list<data>& mok, int a, int paz)
+{   
+   // auto b = mok.begin();
+    //std::advance(b, a);
     int laikinas;
-    for (int i = 0; i < mok[a].n; i++) {
-        for (int j = i + 1; j < mok[a].n; j++)
+    //std::vector<int> c = b->paz;
+    //std::sort(std::begin(c), std::end(c),[](int a, int b) { return a < b; });
+    auto it = mok.begin();
+    std::advance(it, a);
+    //int mokinys = *it;
+    for (int i = 0; i < paz;i++) {
+        for (int j=0;j < paz;j++)
         {
-            if (mok[a].paz[i] > mok[a].paz[j])
+            if (it->paz[i] > it->paz[j])
             {
-                laikinas = mok[a].paz[i];
-                mok[a].paz[i] = mok[a].paz[j];
-                mok[a].paz[j] = laikinas;
+                laikinas = it->paz[i];
+                it->paz[i] = it->paz[j];
+                it->paz[j] = laikinas;
             }
         }
-        if (mok[a].n % 2 == 0) {
-            mok[a].med = (mok[a].paz[mok[a].n / 2] + mok[a].paz[(mok[a].n / 2) - 1]) * 0.5;
+        if (it->n % 2 == 0) {
+             it->med = (it->paz[it->n / 2] + it->paz[(it->n / 2) - 1]) * 0.5;
         }
-        else mok[a].med = mok[a].paz[mok[a].n / 2];
+        else  it->med =  it->paz[it->n / 2];
     }
 }
+
 //VEDAMA RANKA
 void ivestis(data& temp) {
     int p;
